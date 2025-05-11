@@ -1,0 +1,39 @@
+.DS_Store
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+*.orig
+*.class
+*.env
+*.eslintcache
+
+# === IDEs ===
+.idea/
+.vscode/
+.history
+
+# === Node.js / React ===
+node_modules/
+dist/
+build/
+.yarn/
+.pnp.*
+yarn-error.log
+npm-debug.log
+
+# === Scala / sbt ===
+target/
+project/target/
+project/project/
+.bloop/
+.metals/
+.bsp/
+.ivy2/
+.cache/
+.scala_history
+.classpath
+.project
+.settings/
+
