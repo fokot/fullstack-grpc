@@ -5,14 +5,25 @@ import { Button } from '@/components/ui/button'
 export default function App() {
   const { register, handleSubmit } = useForm()
 
-  const { data, isLoading } = useQuery({
+  const { 
+    data, 
+    isLoading, 
+    refetch, 
+    isRefetching, 
+    isError, 
+    error 
+  } = useQuery({
     queryKey: ['example'],
-    queryFn: () => fetch('/api/data').then(res => res.json())
+    queryFn: () => fetch('http://localhost:8080/random').then(res => res.text())
   })
 
-  const onSubmit = (data: any) => {
-    console.log('Form submitted:', data)
+  const onSubmit = (formData: any) => {
+    console.log('Form submitted:', formData)
+    // Trigger refetch of the random data
+    refetch()
   }
+
+  const isSubmitting = isLoading || isRefetching
 
   return (
     <div className="p-6 max-w-md mx-auto">
@@ -23,11 +34,22 @@ export default function App() {
           className="w-full p-2 border rounded"
           placeholder="Your name"
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Loading...' : 'Submit'}
+        </Button>
       </form>
 
       <div className="mt-6">
-        {isLoading ? <p>Loading...</p> : <pre>{JSON.stringify(data, null, 2)}</pre>}
+        {isSubmitting ? (
+          <p>Loading data...</p>
+        ) : isError ? (
+          <div className="text-red-500">Error: {error.message}</div>
+        ) : (
+          <div>
+            <h2 className="text-xl font-bold">Random Data:</h2>
+            <pre className="bg-gray-100 p-3 rounded mt-2">{JSON.stringify(data, null, 2)}</pre>
+          </div>
+        )}
       </div>
     </div>
   )
