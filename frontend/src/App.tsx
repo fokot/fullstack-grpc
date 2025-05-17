@@ -8,6 +8,8 @@ import {createClient} from "@connectrpc/connect";
 import {useState} from "react";
 
 export default function App() {
+  // State to store the name from form submission
+  const [submittedName, setSubmittedName] = useState('Fero');
 
   // The transport defines what type of endpoint we're hitting.
   // In our example we'll be communicating with a Connect endpoint.
@@ -30,15 +32,17 @@ export default function App() {
     isError, 
     error 
   } = useQuery({
-    queryKey: ['example'],
+    queryKey: ['example', submittedName],
     // queryFn: () => fetch('http://localhost:8080/random').then(res => res.text())
     queryFn: () =>
-      client.hello({name: 'Fero'}).then((response) => response.message),
+      client.hello({name: submittedName}).then((response) => response.message),
   })
 
   const onSubmit = (formData: any) => {
     console.log('Form submitted:', formData)
-    // Trigger refetch of the random data
+    // Update the submitted name
+    setSubmittedName(formData.name)
+    // Trigger refetch of the data with the new name
     refetch()
   }
 
