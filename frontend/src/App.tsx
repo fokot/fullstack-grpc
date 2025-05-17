@@ -1,8 +1,25 @@
 import { useQuery } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
+// Import service definition that you want to connect to.
+import { MyApi } from "./gen/my_api_pb";
+import {createConnectTransport} from "@connectrpc/connect-web";
+import {createClient} from "@connectrpc/connect";
+import {useState} from "react";
 
 export default function App() {
+
+  // The transport defines what type of endpoint we're hitting.
+  // In our example we'll be communicating with a Connect endpoint.
+  const transport = createConnectTransport({
+    baseUrl: "http://localhost:8080",
+    useBinaryFormat: true,
+  });
+
+  // Here we make the client itself, combining the service
+  // definition with the transport.
+  const client = createClient(MyApi, transport);
+
   const { register, handleSubmit } = useForm()
 
   const { 
@@ -14,7 +31,9 @@ export default function App() {
     error 
   } = useQuery({
     queryKey: ['example'],
-    queryFn: () => fetch('http://localhost:8080/random').then(res => res.text())
+    // queryFn: () => fetch('http://localhost:8080/random').then(res => res.text())
+    queryFn: () =>
+      client.hello({name: 'Fero'}).then((response) => response.message),
   })
 
   const onSubmit = (formData: any) => {

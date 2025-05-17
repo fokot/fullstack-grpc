@@ -10,6 +10,7 @@ lazy val root = project
     scalaVersion := scala3Version,
     libraryDependencies ++= Seq(
       "io.grpc" % "grpc-netty" % "1.72.0",
+      "io.grpc" % "grpc-we" % "1.72.0",
       "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion,
       "com.thesamet.scalapb" %% "scalapb-json4s" % "0.12.0"
     )
