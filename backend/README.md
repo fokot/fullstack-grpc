@@ -1,11 +1,15 @@
 ## sbt project compiled with Scala 3
 
 ### Usage
+Run as
+```
+sbt run
+```
 
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
-
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+To start envoy proxy, run
+```
+docker run -v "$(pwd)/envoy.yaml:/etc/envoy/envoy.yaml:ro" --network=host envoyproxy/envoy:v1.34-latest
+``` 
 
 ## Testing
 You can use [grpcurl](https://github.com/fullstorydev/grpcurl) like

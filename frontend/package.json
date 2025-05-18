@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "gen": "npx buf generate",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
